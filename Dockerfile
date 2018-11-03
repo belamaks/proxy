@@ -1,6 +1,6 @@
 FROM openjdk:8-alpine
 
-ADD rep/demonstration_server*SNAPSHOT.jar /app/app.jar
+ADD rep/app.jar /app/app.jar
 
 EXPOSE 9999
 
