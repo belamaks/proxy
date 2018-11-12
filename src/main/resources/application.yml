@@ -1,0 +1,33 @@
+server:
+  port: 8086
+
+zuul:
+  ignored-headers: Access-Control-Allow-Credentials, Access-Control-Allow-Origin
+  routes:
+    users:
+      path: /**
+      url: http://localhost:80/v1/companies/id
+      sensitive-headers: Cookie,Set-Cookie
+spring:
+  application:
+    name: "proxy"
+  sleuth:
+    sampler:
+      percentage: 1.0
+    enabled: true
+  http:
+    multipart:
+      max-file-size: 800MB
+      max-request-size: 800MB
+
+
+
+logging:
+  level:
+    ROOT: INFO
+    proxy: ${LOG_GATEWAY:DEBUG}
+    com.hazelcast.cluster: ${LOG_HAZELCAST_CLUSTER:DEBUG}
+    org.springframework.web.socket: ${LOG_SPRING_WEB_SOCKET:INFO}
+  pattern:
+    console: "[%d{yyyy-MM-dd'T'HH:mm:ss.SSS}][lvl=%p][thread=%thread][class=%C{5}][sleuthTraceId=%X{X-B3-TraceId:-}]: %msg%n"
+
